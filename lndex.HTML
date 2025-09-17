@@ -1,1 +1,1002 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoorPath - النور الداخلي</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Segoe UI', 'Helvetica', Arial, sans-serif;
+            background: #0a0e1a;
+            overflow-x: hidden;
+            color: white;
+            line-height: 1.7;
+        }
+
+        /* Ultra Modern Background */
+        .modern-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 48, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 119, 198, 0.2) 0%, transparent 50%),
+                linear-gradient(135deg, #0a0e1a 0%, #1e1b3c 50%, #0a0e1a 100%);
+            z-index: -2;
+            animation: backgroundFlow 15s ease-in-out infinite alternate;
+        }
+
+        /* Geometric Particles */
+        .geometric-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: linear-gradient(45deg, rgba(120, 119, 198, 0.6), rgba(255, 119, 48, 0.4));
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            animation: geometricFloat 8s ease-in-out infinite alternate;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0e1a, #1e1b3c, #0a0e1a);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1.2s ease, visibility 1.2s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .modern-loader {
+            width: 120px;
+            height: 120px;
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .loader-ring {
+            position: absolute;
+            border: 2px solid transparent;
+            border-radius: 50%;
+            animation: modernSpin 3s linear infinite;
+        }
+
+        .loader-ring:nth-child(1) {
+            width: 120px;
+            height: 120px;
+            border-top: 2px solid #7877c6;
+            animation-delay: 0s;
+        }
+
+        .loader-ring:nth-child(2) {
+            width: 90px;
+            height: 90px;
+            top: 15px;
+            left: 15px;
+            border-right: 2px solid #ff7730;
+            animation-delay: -1s;
+        }
+
+        .loader-ring:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 30px;
+            left: 30px;
+            border-bottom: 2px solid #7877c6;
+            animation-delay: -2s;
+        }
+
+        .loader-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            font-weight: 300;
+        }
+
+        .loading-text {
+            font-size: 2.2rem;
+            background: linear-gradient(45deg, #7877c6, #ff7730);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 300;
+            letter-spacing: 4px;
+        }
+
+        .loading-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            max-width: 500px;
+            font-weight: 300;
+        }
+
+        /* Header */
+        .main-header {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .logo-container {
+            margin-bottom: 50px;
+        }
+
+        .main-logo {
+            font-size: 5rem;
+            font-weight: 100;
+            background: linear-gradient(45deg, #7877c6, #ff7730, #7877c6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 30px;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+        }
+
+        .tagline {
+            font-size: 1.6rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 40px;
+            font-weight: 300;
+            max-width: 700px;
+            line-height: 1.8;
+        }
+
+        .philosophy-quote {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 800px;
+            margin: 0 auto 60px;
+            padding: 40px;
+            border: 1px solid rgba(120, 119, 198, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            position: relative;
+            font-weight: 300;
+            line-height: 1.9;
+        }
+
+        .explore-btn {
+            background: linear-gradient(45deg, #7877c6, #ff7730);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            padding: 18px 40px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .explore-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(120, 119, 198, 0.4);
+        }
+
+        /* Services Section */
+        .services-section {
+            padding: 100px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #7877c6, #ff7730);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 200;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(120, 119, 198, 0.1));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 50px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .service-card:hover::before {
+            left: 100%;
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(120, 119, 198, 0.2);
+            border-color: rgba(120, 119, 198, 0.4);
+        }
+
+        .service-icon {
+            font-size: 3.5rem;
+            margin-bottom: 25px;
+            display: block;
+            filter: grayscale(0);
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.1);
+        }
+
+        .service-title {
+            font-size: 1.6rem;
+            font-weight: 400;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .service-description {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        .premium-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #ff7730, #7877c6);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Philosophy Section */
+        .philosophy-section {
+            background: linear-gradient(135deg, rgba(120, 119, 198, 0.1), rgba(255, 119, 48, 0.05));
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .philosophy-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .philosophy-text {
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 2;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .author-signature {
+            font-size: 1.1rem;
+            color: #7877c6;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        /* Footer */
+        .modern-footer {
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(120, 119, 198, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .footer-content {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            font-weight: 300;
+        }
+
+        /* Page Containers */
+        .page-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0e1a, #1e1b3c);
+            z-index: 100;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .page-container.active {
+            display: flex;
+        }
+
+        .page-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .page-title {
+            font-size: 3.5rem;
+            margin-bottom: 40px;
+            background: linear-gradient(45deg, #7877c6, #ff7730);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 200;
+        }
+
+        .page-description {
+            font-size: 1.3rem;
+            line-height: 1.9;
+            margin-bottom: 40px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 300;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            background: rgba(120, 119, 198, 0.2);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(120, 119, 198, 0.4);
+            border-radius: 15px;
+            color: white;
+            padding: 15px 25px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 300;
+        }
+
+        .back-button:hover {
+            background: rgba(120, 119, 198, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .premium-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(120, 119, 198, 0.1));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(120, 119, 198, 0.3);
+            border-radius: 25px;
+            padding: 50px;
+            margin: 40px 0;
+        }
+
+        .premium-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: #7877c6;
+            font-weight: 400;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #7877c6, #ff7730);
+            border: none;
+            border-radius: 30px;
+            color: white;
+            padding: 16px 32px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 12px;
+            font-weight: 400;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(120, 119, 198, 0.3);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            border: 2px solid #7877c6;
+        }
+
+        /* Animations */
+        @keyframes backgroundFlow {
+            0% { filter: hue-rotate(0deg) brightness(0.9); }
+            50% { filter: hue-rotate(20deg) brightness(1.1); }
+            100% { filter: hue-rotate(40deg) brightness(0.9); }
+        }
+
+        @keyframes geometricFloat {
+            from { transform: translateY(0px) rotate(0deg); opacity: 0.4; }
+            to { transform: translateY(-30px) rotate(180deg); opacity: 0.8; }
+        }
+
+        @keyframes modernSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-logo {
+                font-size: 3rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            
+            .service-card {
+                padding: 35px;
+            }
+            
+            .page-title {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="modern-loader">
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <div class="loader-center">✨</div>
+        </div>
+        <div class="loading-text">NoorPath</div>
+        <div class="loading-subtitle">منصة التطوير الذاتي والفلسفة المعاصرة للعقول المتطورة</div>
+    </div>
+
+    <!-- Background -->
+    <div class="modern-background"></div>
+    <div class="geometric-particles" id="particlesContainer"></div>
+
+    <!-- Main Container -->
+    <div class="main-container" id="mainContainer">
+        <!-- Header -->
+        <header class="main-header">
+            <div class="logo-container">
+                <h1 class="main-logo">NoorPath</h1>
+                <p class="tagline">منصة فكرية متقدمة لاستكشاف أعماق الذات والوصول للتميز الشخصي</p>
+                <div class="philosophy-quote">
+                    التطوير الحقيقي للذات يبدأ من فهم عميق لطبيعة الوعي الإنساني وقدراته اللامحدودة على النمو والتحول نحو أفق أرحب من الإمكانيات
+                </div>
+                <button class="explore-btn" onclick="scrollToServices()">استكشف المنصة</button>
+            </div>
+        </header>
+
+        <!-- Services Section -->
+        <section class="services-section" id="servicesSection">
+            <div class="section-header">
+                <h2 class="section-title">مسارات النمو الشخصي</h2>
+                <p class="section-subtitle">برامج متطورة مصممة علمياً لتطوير قدراتك الذهنية والشخصية</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card" onclick="navigateTo('mindfulness')">
+                    <span class="service-icon">🧠</span>
+                    <h3 class="service-title">علم الوعي المتقدم</h3>
+                    <p class="service-description">تقنيات علمية حديثة لتطوير الوعي الذاتي وتحسين القدرات الذهنية من خلال الممارسات المدروسة</p>
+                </div>
+
+                <div class="service-card" onclick="navigateTo('philosophy')">
+                    <span class="service-icon">📚</span>
+                    <h3 class="service-title">الفلسفة التطبيقية</h3>
+                    <p class="service-description">دراسة عميقة للفكر الفلسفي المعاصر وتطبيقه في الحياة العملية لتحقيق النمو الفكري</p>
+                </div>
+
+                <div class="service-card" onclick="navigateTo('balance')">
+                    <span class="service-icon">⚖️</span>
+                    <h3 class="service-title">التوازن النفسي</h3>
+                    <p class="service-description">منهجية علمية لتحقيق التوازن بين الجوانب المختلفة للشخصية والوصول للاستقرار النفسي</p>
+                </div>
+
+                <div class="service-card" onclick="navigateTo('growth')">
+                    <span class="service-icon">🌱</span>
+                    <h3 class="service-title">النمو المستدام</h3>
+                    <p class="service-description">استراتيجيات طويلة الأمد للتطوير المستمر للذات وبناء عادات إيجابية راسخة</p>
+                </div>
+
+                <div class="service-card" onclick="navigateTo('consulting')">
+                    <div class="premium-indicator">مميز</div>
+                    <span class="service-icon">💡</span>
+                    <h3 class="service-title">الاستشارات المتخصصة</h3>
+                    <p class="service-description">جلسات فردية مع خبراء في علم النفس والتطوير الشخصي لوضع خطة نمو مخصصة</p>
+                </div>
+
+                <div class="service-card" onclick="navigateTo('community')">
+                    <div class="premium-indicator">مميز</div>
+                    <span class="service-icon">🤝</span>
+                    <h3 class="service-title">مجتمع المتميزين</h3>
+                    <p class="service-description">شبكة حصرية تضم أفراد متميزين لتبادل الخبرات والأفكار في بيئة محفزة للنمو</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Philosophy Section -->
+        <section class="philosophy-section">
+            <div class="philosophy-content">
+                <p class="philosophy-text">
+                    "الإنسان المتطور هو الذي يسعى باستمرار لفهم ذاته وتطوير قدراته الكامنة، لا من خلال الوهم والخرافات، بل من خلال العلم والمعرفة والتجربة المدروسة"
+                </p>
+                <p class="author-signature">— فلسفة NoorPath</p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="modern-footer">
+            <div class="footer-content">
+                <p>NoorPath © 2024 - منصة التطوير الذاتي والفلسفة المعاصرة</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Page Templates -->
+    <div class="page-container" id="mindfulnessPage">
+        <a href="#" class="back-button" onclick="goHome()">← العودة للرئيسية</a>
+        <div class="page-content">
+            <h1 class="page-title">🧠 علم الوعي المتقدم</h1>
+            <p class="page-description">
+                الوعي الذاتي هو أساس كل تطوير حقيقي للشخصية. نقدم تقنيات علمية مثبتة 
+                لتطوير قدراتك على الملاحظة الذاتية والتركيز العميق.
+            </p>
+            <p class="page-description">
+                من خلال ممارسات مدروسة ومنهجية واضحة، ستتعلم كيفية تحسين أداءك الذهني 
+                وتطوير مهارات التركيز والانتباه بطريقة علمية.
+            </p>
+        </div>
+    </div>
+
+    <div class="page-container" id="philosophyPage">
+        <a href="#" class="back-button" onclick="goHome()">← العودة للرئيسية</a>
+        <div class="page-content">
+            <h1 class="page-title">📚 الفلسفة التطبيقية</h1>
+            <p class="page-description">
+                الفلسفة ليست مجرد نظريات مجردة، بل أدوات عملية لفهم الحياة بشكل أعمق. 
+                ندرس الفكر الفلسفي المعاصر ونطبقه في السياق الحديث.
+            </p>
+            <p class="page-description">
+                تعلم كيف تستخدم المبادئ الفلسفية في اتخاذ قرارات أفضل وبناء منظور 
+                شخصي متماسك وواضح حول الحياة والوجود.
+            </p>
+        </div>
+    </div>
+
+    <div class="page-container" id="balancePage">
+        <a href="#" class="back-button" onclick="goHome()">← العودة للرئيسية</a>
+        <div class="page-content">
+            <h1 class="page-title">⚖️ التوازن النفسي</h1>
+            <p class="page-description">
+                التوازن النفسي يعني القدرة على إدارة المشاعر والأفكار بطريقة صحية ومتوازنة. 
+                نقدم استراتيجيات مبنية على علم النفس الحديث.
+            </p>
+            <p class="page-description">
+                تعلم تقنيات إدارة الضغط النفسي وبناء المرونة العقلية وتطوير الذكاء العاطفي 
+                لتحقيق حياة أكثر استقراراً وسعادة.
+            </p>
+        </div>
+    </div>
+
+    <div class="page-container" id="growthPage">
+        <a href="#" class="back-button" onclick="goHome()">← العودة للرئيسية</a>
+        <div class="page-content">
+            <h1 class="page-title">🌱 النمو المستدام</h1>
+            <p class="page-description">
+                النمو الحقيقي يحدث تدريجياً وبطريقة مستدامة. نساعدك في بناء نظام شخصي 
+                للتطوير المستمر يناسب ظروفك وأهدافك.
+            </p>
+            <p class="page-description">
+                تعلم كيفية وضع أهداف قابلة للتحقيق وبناء عادات إيجابية تدوم، 
+                مع متابعة تقدمك وتعديل المسار عند الحاجة.
+            </p>
+        </div>
+    </div>
+
+    <!-- Premium Pages -->
+    <div class="page-container" id="consultingPage">
+        <a href="#" class="back-button" onclick="goHome()">← العودة للرئيسية</a>
+        <div class="page-content">
+            <h1 class="page-title">💡 الاستشارات المتخصصة</h1>
+            <div class="premium-section">
+                <h3 class="premium-title">جلسات استشارية شخصية</h3>
+                <p class="page-description">
+                    احصل على توجيه مباشر من متخصصين معتمدين في علم النفس والتطوير الشخصي. 
+                    نضع خطة تطوير مخصصة تناسب احتياجاتك وظروفك الشخصية.
+                </p>
+                <button class="cta-button" onclick="subscribe('consulting')">احجز استشارة - 120$ للجلسة</button>
+                <button class="cta-button secondary" onclick="tryDemo('consulting')">استشارة تجريبية مجانية</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-container" id="communityPage">
+        <a href="#" class="back-button" onclick="goHome()">← العودة للرئيسية</a>
+        <div class="page-content">
+            <h1 class="page-title">🤝 مجتمع المتميزين</h1>
+            <div class="premium-section">
+                <h3 class="premium-title">شبكة حصرية للتطوير المتبادل</h3>
+                <p class="page-description">
+                    انضم إلى مجتمع من الأشخاص المتميزين الذين يشاركونك الرغبة في النمو والتطور. 
+                    تبادل الخبرات والأفكار في بيئة محفزة وداعمة.
+                </p>
+                <button class="cta-button" onclick="subscribe('community')">انضم للمجتمع - 49$ شهرياً</button>
+                <button class="cta-button secondary" onclick="tryDemo('community')">تجربة مجانية لأسبوع</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let currentPage = 'home';
+        let userSubscriptions = [];
+
+        // Create geometric particles
+        function createGeometricParticles() {
+            const container = document.getElementById('particlesContainer');
+            const particleCount = 25;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 15 + 10;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (6 + Math.random() * 4) + 's';
+                
+                container.appendChild(particle);
+            }
+        }
+
+        // Smooth scroll to services
+        function scrollToServices() {
+            document.getElementById('servicesSection').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // Navigation functions
+        function navigateTo(page) {
+            const premiumPages = ['consulting', 'community'];
+            
+            // Add smooth transition effect
+            const card = event.target.closest('.service-card');
+            if (card) {
+                card.style.transform = 'scale(0.95)';
+                card.style.opacity = '0.8';
+                
+                setTimeout(() => {
+                    card.style.transform = '';
+                    card.style.opacity = '';
+                }, 200);
+            }
+            
+            setTimeout(() => {
+                if (premiumPages.includes(page) && !userSubscriptions.includes(page)) {
+                    showPage(page + 'Page');
+                } else {
+                    showPage(page + 'Page');
+                }
+            }, 300);
+        }
+
+        function showPage(pageId) {
+            // Hide main container with fade effect
+            const mainContainer = document.getElementById('mainContainer');
+            mainContainer.style.opacity = '0';
+            
+            setTimeout(() => {
+                mainContainer.style.display = 'none';
+                
+                // Hide all pages
+                const pages = document.querySelectorAll('.page-container');
+                pages.forEach(page => page.classList.remove('active'));
+                
+                // Show target page
+                const targetPage = document.getElementById(pageId);
+                targetPage.classList.add('active');
+                targetPage.style.opacity = '0';
+                
+                // Fade in the page
+                setTimeout(() => {
+                    targetPage.style.opacity = '1';
+                }, 50);
+                
+                currentPage = pageId;
+            }, 300);
+        }
+
+        function goHome() {
+            // Hide current page with fade effect
+            const currentPageElement = document.querySelector('.page-container.active');
+            if (currentPageElement) {
+                currentPageElement.style.opacity = '0';
+                
+                setTimeout(() => {
+                    // Hide all pages
+                    const pages = document.querySelectorAll('.page-container');
+                    pages.forEach(page => page.classList.remove('active'));
+                    
+                    // Show main container
+                    const mainContainer = document.getElementById('mainContainer');
+                    mainContainer.style.display = 'block';
+                    mainContainer.style.opacity = '0';
+                    
+                    // Fade in main container
+                    setTimeout(() => {
+                        mainContainer.style.opacity = '1';
+                    }, 50);
+                    
+                    currentPage = 'home';
+                }, 300);
+            }
+        }
+
+        function subscribe(service) {
+            // Create a more sophisticated modal-like experience
+            const overlay = document.createElement('div');
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                z-index: 2000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                backdrop-filter: blur(10px);
+            `;
+            
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                background: linear-gradient(135deg, rgba(120, 119, 198, 0.2), rgba(255, 119, 48, 0.1));
+                backdrop-filter: blur(20px);
+                border: 1px solid rgba(120, 119, 198, 0.3);
+                border-radius: 25px;
+                padding: 40px;
+                text-align: center;
+                color: white;
+                max-width: 500px;
+                animation: modalSlideIn 0.3s ease;
+            `;
+            
+            modal.innerHTML = `
+                <h3 style="margin-bottom: 20px; color: #7877c6;">سيتم توجيهك لصفحة الدفع الآمن</h3>
+                <p style="margin-bottom: 30px; opacity: 0.8;">هذا مجرد عرض تجريبي للمنصة</p>
+                <button onclick="this.parentElement.parentElement.remove()" style="
+                    background: linear-gradient(45deg, #7877c6, #ff7730);
+                    border: none;
+                    border-radius: 20px;
+                    color: white;
+                    padding: 12px 24px;
+                    cursor: pointer;
+                    font-weight: 400;
+                ">حسناً</button>
+            `;
+            
+            overlay.appendChild(modal);
+            document.body.appendChild(overlay);
+            
+            // Add modal animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes modalSlideIn {
+                    from { transform: translateY(-50px); opacity: 0; }
+                    to { transform: translateY(0); opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        function tryDemo(service) {
+            userSubscriptions.push(service);
+            
+            // Create success notification
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 30px;
+                right: 30px;
+                background: linear-gradient(45deg, #7877c6, #ff7730);
+                color: white;
+                padding: 20px 30px;
+                border-radius: 15px;
+                z-index: 2000;
+                font-weight: 400;
+                box-shadow: 0 10px 30px rgba(120, 119, 198, 0.3);
+                animation: notificationSlide 0.5s ease;
+            `;
+            
+            notification.textContent = 'تم تفعيل النسخة التجريبية بنجاح! 🎉';
+            document.body.appendChild(notification);
+            
+            // Add notification animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes notificationSlide {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'notificationSlide 0.5s ease reverse';
+                setTimeout(() => {
+                    if (notification.parentElement) {
+                        notification.remove();
+                    }
+                }, 500);
+            }, 3000);
+            
+            setTimeout(goHome, 1500);
+        }
+
+        // Initialize the site
+        function initializeSite() {
+            // Create geometric particles
+            createGeometricParticles();
+            
+            // Add smooth transitions
+            document.body.style.transition = 'all 0.3s ease';
+            
+            // Hide loading screen with elegant timing
+            setTimeout(() => {
+                const loadingScreen = document.getElementById('loadingScreen');
+                loadingScreen.classList.add('hidden');
+                
+                // Add entrance animations to main elements
+                setTimeout(() => {
+                    const mainContainer = document.getElementById('mainContainer');
+                    mainContainer.style.opacity = '0';
+                    mainContainer.style.transform = 'translateY(20px)';
+                    mainContainer.style.transition = 'all 0.8s ease';
+                    
+                    setTimeout(() => {
+                        mainContainer.style.opacity = '1';
+                        mainContainer.style.transform = 'translateY(0)';
+                    }, 100);
+                }, 500);
+            }, 3000);
+        }
+
+        // Enhanced scroll behavior
+        function addScrollEffects() {
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * -0.5;
+                
+                const particles = document.getElementById('particlesContainer');
+                if (particles) {
+                    particles.style.transform = `translateY(${rate}px)`;
+                }
+            });
+        }
+
+        // Start when page loads
+        window.addEventListener('load', () => {
+            initializeSite();
+            addScrollEffects();
+        });
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && currentPage !== 'home') {
+                goHome();
+            }
+        });
+
+        // Enhanced card hover effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.service-card');
+            cards.forEach((card, index) => {
+                // Staggered entrance animation
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'all 0.6s ease';
+                
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 200 * index);
+                
+                // Enhanced hover effects
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-15px) scale(1.02)';
+                    this.style.zIndex = '10';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                    this.style.zIndex = '1';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
