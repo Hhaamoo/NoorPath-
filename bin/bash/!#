@@ -1,0 +1,18 @@
+
+set -euo pipefail
+
+# تثبيت Apache, PHP, وMySQL client
+apt-get update
+apt-get install -y apache2 php php-mysql libapache2-mod-php unzip
+
+# تنزيل وردبريس
+WP_DIR="/var/www/html/wordpress"
+mkdir -p "$WP_DIR"
+wget -O wordpress.zip https://wordpress.org/latest.zip
+unzip wordpress.zip -d /tmp/wordpress && mv /tmp/wordpress/wordpress/* "$WP_DIR"
+rm -f wordpress.zip
+chown -R www-data:www-data "$WP_DIR"
+
+# تفعيل الموقع الافتراضي وتأكد أن SRC تابع
+a2ensite 000-default
+systemctl reload apache2
